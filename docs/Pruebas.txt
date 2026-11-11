@@ -1,0 +1,19 @@
+Registrar:
+
+Juan Pérez
+221810001
+
+Asistencia 24
+Actividades 900
+Practicas 8
+Examen 110
+
+Actualizar:
+
+Juan Pérez
+
+Examen 120
+
+Consultar:
+
+Juan Pérez

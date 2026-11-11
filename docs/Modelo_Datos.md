@@ -1,0 +1,16 @@
+Entidades
+Estudiante
+Matricula
+Nombre
+Grupo
+Evaluacion
+Id
+Matricula
+Asignatura
+Corte
+Asistencia
+Actividades
+Practicas
+Examen
+CalificacionFinal
+FechaRegistro

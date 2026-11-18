@@ -1,4 +1,70 @@
 @page
-@model EvaluadorAcademico.web.Pages.CapturarModel
+@model EvaluadorAcademico.Web.Pages.AlumnosModel
 
-<h1>Capturar Calificación</h1>
+<h1>Administración de Alumnos</h1>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label>Matrícula</label>
+        <input asp-for="Alumno.Matricula"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input asp-for="Alumno.Nombre"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Grupo</label>
+        <input asp-for="Alumno.Grupo"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Asignatura</label>
+        <input asp-for="Alumno.Asignatura"
+               class="form-control" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Guardar Alumno
+    </button>
+
+</form>
+
+<hr />
+
+<h2>Alumnos Registrados</h2>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Matrícula</th>
+            <th>Nombre</th>
+            <th>Grupo</th>
+            <th>Asignatura</th>
+            <th>Estatus</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var alumno in Model.ListaAlumnos)
+        {
+            <tr>
+                <td>@alumno.Matricula</td>
+                <td>@alumno.Nombre</td>
+                <td>@alumno.Grupo</td>
+                <td>@alumno.Asignatura</td>
+                <td>@alumno.Estatus</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

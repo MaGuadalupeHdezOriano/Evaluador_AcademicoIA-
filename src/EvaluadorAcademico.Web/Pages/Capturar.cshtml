@@ -1,70 +1,59 @@
 @page
-@model EvaluadorAcademico.Web.Pages.AlumnosModel
+@model EvaluadorAcademico.Web.Pages.CapturarModel
 
-<h1>Administración de Alumnos</h1>
+<h1>Capturar Calificación</h1>
 
 <form method="post">
 
     <div class="mb-3">
         <label>Matrícula</label>
-        <input asp-for="Alumno.Matricula"
+        <input asp-for="Evaluacion.Matricula"
                class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Nombre</label>
-        <input asp-for="Alumno.Nombre"
+        <label>Asistencia</label>
+        <input asp-for="Evaluacion.Asistencia"
                class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Grupo</label>
-        <input asp-for="Alumno.Grupo"
+        <label>Actividades</label>
+        <input asp-for="Evaluacion.Actividades"
                class="form-control" />
     </div>
 
     <div class="mb-3">
-        <label>Asignatura</label>
-        <input asp-for="Alumno.Asignatura"
+        <label>Prácticas</label>
+        <input asp-for="Evaluacion.Practicas"
                class="form-control" />
     </div>
 
-    <button type="submit"
-            class="btn btn-primary">
-        Guardar Alumno
+    <div class="mb-3">
+        <label>Examen</label>
+        <input asp-for="Evaluacion.Examen"
+               class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Calcular
     </button>
 
 </form>
 
-<hr />
+@if (Model.Calificacion100 > 0)
+{
+    <hr />
 
-<h2>Alumnos Registrados</h2>
+    <h3>Resultado</h3>
 
-<table class="table table-striped">
+    <p>
+        Calificación (0-100):
+        <strong>@Model.Calificacion100</strong>
+    </p>
 
-    <thead>
-        <tr>
-            <th>Matrícula</th>
-            <th>Nombre</th>
-            <th>Grupo</th>
-            <th>Asignatura</th>
-            <th>Estatus</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var alumno in Model.ListaAlumnos)
-        {
-            <tr>
-                <td>@alumno.Matricula</td>
-                <td>@alumno.Nombre</td>
-                <td>@alumno.Grupo</td>
-                <td>@alumno.Asignatura</td>
-                <td>@alumno.Estatus</td>
-            </tr>
-        }
-
-    </tbody>
-
-</table>
+    <p>
+        Calificación (0-10):
+        <strong>@Model.Calificacion10</strong>
+    </p>
+}

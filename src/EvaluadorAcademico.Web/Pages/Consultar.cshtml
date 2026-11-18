@@ -1,6 +1,33 @@
 @page
 @model ConsultarModel
 
-<h1>Consultar Alumno</h1>
+<h1>Consultar Alumnos del Excel</h1>
 
-<p>Módulo en construcción.</p>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Matrícula</th>
+            <th>Nombre</th>
+            <th>Grupo</th>
+            <th>Asignatura</th>
+            <th>Estatus</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var alumno in Model.Alumnos)
+        {
+            <tr>
+                <td>@alumno.Matricula</td>
+                <td>@alumno.Nombre</td>
+                <td>@alumno.Grupo</td>
+                <td>@alumno.Asignatura</td>
+                <td>@alumno.Estatus</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

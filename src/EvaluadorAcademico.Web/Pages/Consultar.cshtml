@@ -1,33 +1,52 @@
 @page
 @model ConsultarModel
 
-<h1>Consultar Alumnos del Excel</h1>
+<h1>Consultar Alumno</h1>
 
-<table class="table table-striped">
+<form method="post">
 
-    <thead>
-        <tr>
-            <th>Matrícula</th>
-            <th>Nombre</th>
-            <th>Grupo</th>
-            <th>Asignatura</th>
-            <th>Estatus</th>
-        </tr>
-    </thead>
+    <div class="mb-3">
+        <label>Matrícula</label>
 
-    <tbody>
+        <input asp-for="Matricula"
+               class="form-control" />
+    </div>
 
-        @foreach (var alumno in Model.Alumnos)
-        {
-            <tr>
-                <td>@alumno.Matricula</td>
-                <td>@alumno.Nombre</td>
-                <td>@alumno.Grupo</td>
-                <td>@alumno.Asignatura</td>
-                <td>@alumno.Estatus</td>
-            </tr>
-        }
+    <button type="submit"
+            class="btn btn-primary">
+        Buscar
+    </button>
 
-    </tbody>
+</form>
 
-</table>
+@if (Model.Alumno != null)
+{
+    <hr />
+
+    <h3>Información del Alumno</h3>
+
+    <p>
+        <strong>Matrícula:</strong>
+        @Model.Alumno.Matricula
+    </p>
+
+    <p>
+        <strong>Nombre:</strong>
+        @Model.Alumno.Nombre
+    </p>
+
+    <p>
+        <strong>Grupo:</strong>
+        @Model.Alumno.Grupo
+    </p>
+
+    <p>
+        <strong>Asignatura:</strong>
+        @Model.Alumno.Asignatura
+    </p>
+
+    <p>
+        <strong>Estatus:</strong>
+        @Model.Alumno.Estatus
+    </p>
+}

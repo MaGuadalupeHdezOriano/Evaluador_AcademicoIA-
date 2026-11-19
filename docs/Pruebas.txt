@@ -17,3 +17,27 @@ Examen 120
 Consultar:
 
 Juan Pérez
+
+Casos de prueba de la aplicación
+
+Acceso
+- Iniciar sesión con las credenciales docentes configuradas.
+- Rechazar credenciales incorrectas y aplicar bloqueo después de cinco intentos fallidos.
+- Redirigir al inicio de sesión cuando se solicite una sección sin sesión.
+
+Alumnos
+- Registrar matrícula, nombre y grupo válidos.
+- Rechazar campos vacíos y matrícula duplicada.
+- Dar de baja y reactivar un alumno sin borrar sus evaluaciones.
+
+Evaluaciones
+- Capturar una evaluación y verificar la calificación en escala de 0 a 10.
+- Rechazar puntajes negativos y puntajes superiores a los máximos.
+- Rechazar puntajes y porcentajes con más de dos decimales.
+- Modificar una evaluación y verificar que no se duplique.
+- Buscar por matrícula, nombre, grupo, asignatura y corte.
+- Descargar el archivo Excel y verificar que incluya todos los registros, también los de alumnos dados de baja.
+
+Porcentajes
+- Guardar una configuración que sume 100% y comprobar el recálculo de todas las evaluaciones.
+- Rechazar una suma menor o mayor a 100%.

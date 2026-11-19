@@ -67,4 +67,22 @@ public class ExcelService
                     matricula.Trim(),
                     StringComparison.OrdinalIgnoreCase));
     }
+    public void GuardarEvaluacion(Evaluacion evaluacion, string nombre)
+{
+    using var workbook = new XLWorkbook(rutaExcel);
+
+    var hoja = workbook.Worksheet("EVALUACIONES");
+
+    int ultimaFila = hoja.LastRowUsed().RowNumber() + 1;
+
+    hoja.Cell(ultimaFila, 1).Value = evaluacion.Matricula;
+    hoja.Cell(ultimaFila, 2).Value = nombre;
+    hoja.Cell(ultimaFila, 3).Value = evaluacion.Asistencia;
+    hoja.Cell(ultimaFila, 4).Value = evaluacion.Actividades;
+    hoja.Cell(ultimaFila, 5).Value = evaluacion.Practicas;
+    hoja.Cell(ultimaFila, 6).Value = evaluacion.Examen;
+    hoja.Cell(ultimaFila, 7).Value = evaluacion.Calificacion10;
+
+    workbook.Save();
+}
 }

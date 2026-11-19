@@ -10,6 +10,8 @@ public class CapturarModel : PageModel
     [BindProperty]
     public Evaluacion Evaluacion { get; set; } = new();
 
+    public Alumno? AlumnoEncontrado { get; set; }
+
     public decimal Calificacion100 { get; set; }
 
     public decimal Calificacion10 { get; set; }
@@ -19,37 +21,41 @@ public class CapturarModel : PageModel
     }
 
     public void OnPost()
-{
-    var parametros = new ParametrosEvaluacion
     {
-        AsistenciaMaxima = 24,
-        ActividadesMaximas = 1000,
-        PracticasMaximas = 10,
-        ExamenMaximo = 125,
+        var excel = new ExcelService();
 
-        PorcentajeAsistencia = 10,
-        PorcentajeActividades = 25,
-        PorcentajePracticas = 25,
-        PorcentajeExamen = 40
-    };
+        AlumnoEncontrado =
+            excel.BuscarAlumno(Evaluacion.Matricula);
 
-    var calculo = new CalculoService();
+        var parametros = new ParametrosEvaluacion
+        {
+            AsistenciaMaxima = 24,
+            ActividadesMaximas = 1000,
+            PracticasMaximas = 10,
+            ExamenMaximo = 125,
 
-    Evaluacion = calculo.Calcular(Evaluacion, parametros);
+            PorcentajeAsistencia = 10,
+            PorcentajeActividades = 25,
+            PorcentajePracticas = 25,
+            PorcentajeExamen = 40
+        };
 
-    Calificacion100 = Evaluacion.Calificacion100;
+        var calculo = new CalculoService();
 
-    Calificacion10 = Evaluacion.Calificacion10;
+        Evaluacion =
+            calculo.Calcular(Evaluacion, parametros);
 
-    var excel = new ExcelService();
+        Calificacion100 =
+            Evaluacion.Calificacion100;
 
-    var alumno = excel.BuscarAlumno(Evaluacion.Matricula);
+        Calificacion10 =
+            Evaluacion.Calificacion10;
 
-    if (alumno != null)
-    {
-        excel.GuardarEvaluacion(
-            Evaluacion,
-            alumno.Nombre);
+        if (AlumnoEncontrado != null)
+        {
+            excel.GuardarEvaluacion(
+                Evaluacion,
+                AlumnoEncontrado.Nombre);
+        }
     }
-}
 }

@@ -7,37 +7,62 @@
 
     <div class="mb-3">
         <label>Matrícula</label>
+
         <input asp-for="Evaluacion.Matricula"
                class="form-control" />
     </div>
 
+    @if (Model.AlumnoEncontrado != null)
+    {
+        <div class="alert alert-info">
+
+            <strong>Nombre:</strong>
+            @Model.AlumnoEncontrado.Nombre
+
+            <br />
+
+            <strong>Grupo:</strong>
+            @Model.AlumnoEncontrado.Grupo
+
+            <br />
+
+            <strong>Asignatura:</strong>
+            @Model.AlumnoEncontrado.Asignatura
+
+        </div>
+    }
+
     <div class="mb-3">
         <label>Asistencia</label>
+
         <input asp-for="Evaluacion.Asistencia"
                class="form-control" />
     </div>
 
     <div class="mb-3">
         <label>Actividades</label>
+
         <input asp-for="Evaluacion.Actividades"
                class="form-control" />
     </div>
 
     <div class="mb-3">
         <label>Prácticas</label>
+
         <input asp-for="Evaluacion.Practicas"
                class="form-control" />
     </div>
 
     <div class="mb-3">
         <label>Examen</label>
+
         <input asp-for="Evaluacion.Examen"
                class="form-control" />
     </div>
 
     <button type="submit"
             class="btn btn-primary">
-        Calcular
+        Calcular y Guardar
     </button>
 
 </form>

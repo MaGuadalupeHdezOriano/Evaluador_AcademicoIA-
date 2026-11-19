@@ -1,4 +1,59 @@
 @page
-@model EvaluadorAcademico.Web.Pages.ModificarModel
+@model ModificarModel
 
 <h1>Modificar Calificación</h1>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label>Matrícula</label>
+
+        <input asp-for="Matricula"
+               class="form-control" />
+    </div>
+
+    <button asp-page-handler="Buscar"
+            class="btn btn-primary">
+
+        Buscar Evaluación
+
+    </button>
+
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Evaluacion.Matricula))
+{
+    <hr />
+
+    <h3>Evaluación Encontrada</h3>
+
+    <p>
+        Matrícula:
+        <strong>@Model.Evaluacion.Matricula</strong>
+    </p>
+
+    <p>
+        Asistencia:
+        <strong>@Model.Evaluacion.Asistencia</strong>
+    </p>
+
+    <p>
+        Actividades:
+        <strong>@Model.Evaluacion.Actividades</strong>
+    </p>
+
+    <p>
+        Prácticas:
+        <strong>@Model.Evaluacion.Practicas</strong>
+    </p>
+
+    <p>
+        Examen:
+        <strong>@Model.Evaluacion.Examen</strong>
+    </p>
+
+    <p>
+        Calificación:
+        <strong>@Model.Evaluacion.Calificacion10</strong>
+    </p>
+}

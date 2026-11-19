@@ -114,4 +114,31 @@ public Evaluacion? ObtenerEvaluacion(string matricula)
 
     return null;
 }
+public void ActualizarEvaluacion(Evaluacion evaluacion)
+{
+    using var workbook = new XLWorkbook(rutaExcel);
+
+    var hoja = workbook.Worksheet("EVALUACIONES");
+
+    var filas = hoja.RowsUsed().Skip(1);
+
+    foreach (var fila in filas)
+    {
+        var matriculaExcel =
+            fila.Cell(1).GetValue<string>().Trim();
+
+        if (matriculaExcel == evaluacion.Matricula.Trim())
+        {
+            fila.Cell(3).Value = evaluacion.Asistencia;
+            fila.Cell(4).Value = evaluacion.Actividades;
+            fila.Cell(5).Value = evaluacion.Practicas;
+            fila.Cell(6).Value = evaluacion.Examen;
+            fila.Cell(7).Value = evaluacion.Calificacion10;
+
+            break;
+        }
+    }
+
+    workbook.Save();
+}
 }

@@ -27,33 +27,45 @@
 
     <h3>Evaluación Encontrada</h3>
 
-    <p>
-        Matrícula:
-        <strong>@Model.Evaluacion.Matricula</strong>
-    </p>
+    <form method="post">
 
-    <p>
-        Asistencia:
-        <strong>@Model.Evaluacion.Asistencia</strong>
-    </p>
+        <input asp-for="Evaluacion.Matricula"
+               type="hidden" />
 
-    <p>
-        Actividades:
-        <strong>@Model.Evaluacion.Actividades</strong>
-    </p>
+        <div class="mb-3">
+            <label>Asistencia</label>
 
-    <p>
-        Prácticas:
-        <strong>@Model.Evaluacion.Practicas</strong>
-    </p>
+            <input asp-for="Evaluacion.Asistencia"
+                   class="form-control" />
+        </div>
 
-    <p>
-        Examen:
-        <strong>@Model.Evaluacion.Examen</strong>
-    </p>
+        <div class="mb-3">
+            <label>Actividades</label>
 
-    <p>
-        Calificación:
-        <strong>@Model.Evaluacion.Calificacion10</strong>
-    </p>
+            <input asp-for="Evaluacion.Actividades"
+                   class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Prácticas</label>
+
+            <input asp-for="Evaluacion.Practicas"
+                   class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Examen</label>
+
+            <input asp-for="Evaluacion.Examen"
+                   class="form-control" />
+        </div>
+
+        <button asp-page-handler="Guardar"
+                class="btn btn-success">
+
+            Guardar Cambios
+
+        </button>
+
+    </form>
 }

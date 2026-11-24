@@ -49,4 +49,35 @@
         <strong>Estatus:</strong>
         @Model.Alumno.Estatus
     </p>
+    @if (Model.Evaluacion != null)
+{
+    <hr />
+
+    <h3>Evaluación</h3>
+
+    <p>
+        <strong>Asistencia:</strong>
+        @Model.Evaluacion.Asistencia
+    </p>
+
+    <p>
+        <strong>Actividades:</strong>
+        @Model.Evaluacion.Actividades
+    </p>
+
+    <p>
+        <strong>Prácticas:</strong>
+        @Model.Evaluacion.Practicas
+    </p>
+
+    <p>
+        <strong>Examen:</strong>
+        @Model.Evaluacion.Examen
+    </p>
+
+    <p>
+        <strong>Calificación:</strong>
+        @Model.Evaluacion.Calificacion10
+    </p>
+}
 }

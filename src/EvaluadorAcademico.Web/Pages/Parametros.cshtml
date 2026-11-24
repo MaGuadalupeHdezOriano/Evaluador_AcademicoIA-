@@ -1,0 +1,76 @@
+@page
+@model ParametrosModel
+
+<h1>Configuración de Evaluación</h1>
+
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-success">
+        @Model.Mensaje
+    </div>
+}
+
+<form method="post">
+
+    <h3>Asistencia</h3>
+
+    <div class="mb-3">
+        <label>Máximo</label>
+        <input asp-for="Parametros.AsistenciaMaxima"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Porcentaje</label>
+        <input asp-for="Parametros.PorcentajeAsistencia"
+               class="form-control" />
+    </div>
+
+    <h3>Actividades</h3>
+
+    <div class="mb-3">
+        <label>Máximo</label>
+        <input asp-for="Parametros.ActividadesMaximas"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Porcentaje</label>
+        <input asp-for="Parametros.PorcentajeActividades"
+               class="form-control" />
+    </div>
+
+    <h3>Prácticas</h3>
+
+    <div class="mb-3">
+        <label>Máximo</label>
+        <input asp-for="Parametros.PracticasMaximas"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Porcentaje</label>
+        <input asp-for="Parametros.PorcentajePracticas"
+               class="form-control" />
+    </div>
+
+    <h3>Examen</h3>
+
+    <div class="mb-3">
+        <label>Máximo</label>
+        <input asp-for="Parametros.ExamenMaximo"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Porcentaje</label>
+        <input asp-for="Parametros.PorcentajeExamen"
+               class="form-control" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Guardar Configuración
+    </button>
+
+</form>

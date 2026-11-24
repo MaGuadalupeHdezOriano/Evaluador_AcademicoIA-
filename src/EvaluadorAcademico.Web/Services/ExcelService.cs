@@ -5,8 +5,8 @@ namespace EvaluadorAcademico.Web.Services;
 
 public class ExcelService
 {
-   private readonly string rutaExcel =
-@"C:\Proyectos\Evaluador_Academico\data\Control_Calificaciones.xlsx";
+    private readonly string rutaExcel =
+        @"C:\Proyectos\Evaluador_Academico\data\Control_Calificaciones.xlsx";
 
     public List<Alumno> ObtenerAlumnos()
     {
@@ -15,20 +15,6 @@ public class ExcelService
         using var workbook = new XLWorkbook(rutaExcel);
 
         var hoja = workbook.Worksheet("ALUMNOS");
-
-        Console.WriteLine("===== DIAGNOSTICO EXCEL =====");
-
-        foreach (var fila in hoja.RowsUsed())
-        {
-            Console.WriteLine(
-                $"Fila {fila.RowNumber()} | " +
-                $"C1=[{fila.Cell(1).GetValue<string>()}] | " +
-                $"C2=[{fila.Cell(2).GetValue<string>()}] | " +
-                $"C3=[{fila.Cell(3).GetValue<string>()}] | " +
-                $"C4=[{fila.Cell(4).GetValue<string>()}] | " +
-                $"C5=[{fila.Cell(5).GetValue<string>()}] | " +
-                $"C6=[{fila.Cell(6).GetValue<string>()}]");
-        }
 
         var filas = hoja.RowsUsed().Skip(2);
 
@@ -40,6 +26,7 @@ public class ExcelService
                 Nombre = fila.Cell(3).GetValue<string>().Trim(),
                 Grupo = fila.Cell(4).GetValue<string>().Trim(),
                 Asignatura = fila.Cell(5).GetValue<string>().Trim(),
+                Cuatrimestre = fila.Cell(6).GetValue<string>().Trim(),
                 Estatus = fila.Cell(7).GetValue<string>().Trim()
             });
         }
@@ -47,97 +34,179 @@ public class ExcelService
         return alumnos;
     }
 
+    public bool ExisteAlumno(string matricula)
+    {
+        var alumnos = ObtenerAlumnos();
+
+        return alumnos.Any(a =>
+            a.Matricula.Trim() ==
+            matricula.Trim());
+    }
+
     public Alumno? BuscarAlumno(string matricula)
     {
         var alumnos = ObtenerAlumnos();
 
-        Console.WriteLine("===== ALUMNOS LEIDOS =====");
-
-        foreach (var alumno in alumnos)
-        {
-            Console.WriteLine(
-                $"[{alumno.Matricula}] - {alumno.Nombre}");
-        }
-
-        Console.WriteLine($"BUSCANDO: [{matricula}]");
-
-        return alumnos.FirstOrDefault(
-            a => a.Matricula.Trim()
-                .Equals(
-                    matricula.Trim(),
-                    StringComparison.OrdinalIgnoreCase));
+        return alumnos.FirstOrDefault(a =>
+            a.Matricula.Trim() ==
+            matricula.Trim());
     }
-    public void GuardarEvaluacion(Evaluacion evaluacion, string nombre)
-{
-    using var workbook = new XLWorkbook(rutaExcel);
 
-    var hoja = workbook.Worksheet("EVALUACIONES");
-
-    int ultimaFila = hoja.LastRowUsed().RowNumber() + 1;
-
-    hoja.Cell(ultimaFila, 1).Value = evaluacion.Matricula;
-    hoja.Cell(ultimaFila, 2).Value = nombre;
-    hoja.Cell(ultimaFila, 3).Value = evaluacion.Asistencia;
-    hoja.Cell(ultimaFila, 4).Value = evaluacion.Actividades;
-    hoja.Cell(ultimaFila, 5).Value = evaluacion.Practicas;
-    hoja.Cell(ultimaFila, 6).Value = evaluacion.Examen;
-    hoja.Cell(ultimaFila, 7).Value = evaluacion.Calificacion10;
-
-    workbook.Save();
-}
-public Evaluacion? ObtenerEvaluacion(string matricula)
-{
-    using var workbook = new XLWorkbook(rutaExcel);
-
-    var hoja = workbook.Worksheet("EVALUACIONES");
-
-    var filas = hoja.RowsUsed().Skip(1);
-
-    foreach (var fila in filas)
+    public void GuardarAlumno(Alumno alumno)
     {
-        var matriculaExcel =
-            fila.Cell(1).GetValue<string>().Trim();
+        using var workbook = new XLWorkbook(rutaExcel);
 
-        if (matriculaExcel == matricula.Trim())
+        var hoja = workbook.Worksheet("ALUMNOS");
+
+        var ultimaFilaUsada = hoja.LastRowUsed();
+
+        int ultimaFila =
+            (ultimaFilaUsada?.RowNumber() ?? 1) + 1;
+
+        hoja.Cell(ultimaFila, 2).Value = alumno.Matricula;
+        hoja.Cell(ultimaFila, 3).Value = alumno.Nombre;
+        hoja.Cell(ultimaFila, 4).Value = alumno.Grupo;
+        hoja.Cell(ultimaFila, 5).Value = alumno.Asignatura;
+        hoja.Cell(ultimaFila, 6).Value = alumno.Cuatrimestre;
+        hoja.Cell(ultimaFila, 7).Value = alumno.Estatus;
+
+        workbook.Save();
+    }
+
+    public void GuardarEvaluacion(
+        Evaluacion evaluacion,
+        string nombre)
+    {
+        using var workbook = new XLWorkbook(rutaExcel);
+
+        var hoja = workbook.Worksheet("EVALUACIONES");
+
+        var ultimaFilaUsada = hoja.LastRowUsed();
+
+        int ultimaFila =
+            (ultimaFilaUsada?.RowNumber() ?? 1) + 1;
+
+        hoja.Cell(ultimaFila, 1).Value = evaluacion.Matricula;
+        hoja.Cell(ultimaFila, 2).Value = nombre;
+        hoja.Cell(ultimaFila, 3).Value = evaluacion.Asistencia;
+        hoja.Cell(ultimaFila, 4).Value = evaluacion.Actividades;
+        hoja.Cell(ultimaFila, 5).Value = evaluacion.Practicas;
+        hoja.Cell(ultimaFila, 6).Value = evaluacion.Examen;
+        hoja.Cell(ultimaFila, 7).Value = evaluacion.Calificacion10;
+
+        workbook.Save();
+    }
+
+    public Evaluacion? ObtenerEvaluacion(
+        string matricula)
+    {
+        using var workbook = new XLWorkbook(rutaExcel);
+
+        var hoja = workbook.Worksheet("EVALUACIONES");
+
+        var filas = hoja.RowsUsed().Skip(1);
+
+        foreach (var fila in filas)
         {
-            return new Evaluacion
+            var matriculaExcel =
+                fila.Cell(1).GetValue<string>().Trim();
+
+            if (matriculaExcel ==
+                matricula.Trim())
             {
-                Matricula = matriculaExcel,
-                Asistencia = fila.Cell(3).GetValue<decimal>(),
-                Actividades = fila.Cell(4).GetValue<decimal>(),
-                Practicas = fila.Cell(5).GetValue<decimal>(),
-                Examen = fila.Cell(6).GetValue<decimal>(),
-                Calificacion10 = fila.Cell(7).GetValue<decimal>()
-            };
+                return new Evaluacion
+                {
+                    Matricula = matriculaExcel,
+                    Asistencia =
+                        fila.Cell(3).GetValue<decimal>(),
+                    Actividades =
+                        fila.Cell(4).GetValue<decimal>(),
+                    Practicas =
+                        fila.Cell(5).GetValue<decimal>(),
+                    Examen =
+                        fila.Cell(6).GetValue<decimal>(),
+                    Calificacion10 =
+                        fila.Cell(7).GetValue<decimal>()
+                };
+            }
         }
+
+        return null;
     }
 
-    return null;
-}
-public void ActualizarEvaluacion(Evaluacion evaluacion)
+    public void ActualizarEvaluacion(
+        Evaluacion evaluacion)
+    {
+        using var workbook = new XLWorkbook(rutaExcel);
+
+        var hoja = workbook.Worksheet("EVALUACIONES");
+
+        var filas = hoja.RowsUsed().Skip(1);
+
+        foreach (var fila in filas)
+        {
+            var matriculaExcel =
+                fila.Cell(1).GetValue<string>().Trim();
+
+            if (matriculaExcel ==
+                evaluacion.Matricula.Trim())
+            {
+                fila.Cell(3).Value =
+                    evaluacion.Asistencia;
+
+                fila.Cell(4).Value =
+                    evaluacion.Actividades;
+
+                fila.Cell(5).Value =
+                    evaluacion.Practicas;
+
+                fila.Cell(6).Value =
+                    evaluacion.Examen;
+
+                fila.Cell(7).Value =
+                    evaluacion.Calificacion10;
+
+                break;
+            }
+        }
+
+        workbook.Save();
+    }
+public ParametrosEvaluacion ObtenerParametros()
 {
     using var workbook = new XLWorkbook(rutaExcel);
 
-    var hoja = workbook.Worksheet("EVALUACIONES");
+    var hoja = workbook.Worksheet("PARAMETROS");
 
-    var filas = hoja.RowsUsed().Skip(1);
-
-    foreach (var fila in filas)
+    return new ParametrosEvaluacion
     {
-        var matriculaExcel =
-            fila.Cell(1).GetValue<string>().Trim();
+        AsistenciaMaxima = hoja.Cell("B6").GetValue<decimal>(),
+        ActividadesMaximas = hoja.Cell("C6").GetValue<decimal>(),
+        PracticasMaximas = hoja.Cell("D6").GetValue<decimal>(),
+        ExamenMaximo = hoja.Cell("E6").GetValue<decimal>(),
 
-        if (matriculaExcel == evaluacion.Matricula.Trim())
-        {
-            fila.Cell(3).Value = evaluacion.Asistencia;
-            fila.Cell(4).Value = evaluacion.Actividades;
-            fila.Cell(5).Value = evaluacion.Practicas;
-            fila.Cell(6).Value = evaluacion.Examen;
-            fila.Cell(7).Value = evaluacion.Calificacion10;
+        PorcentajeAsistencia = hoja.Cell("B7").GetValue<decimal>(),
+        PorcentajeActividades = hoja.Cell("C7").GetValue<decimal>(),
+        PorcentajePracticas = hoja.Cell("D7").GetValue<decimal>(),
+        PorcentajeExamen = hoja.Cell("E7").GetValue<decimal>()
+    };
+}
+public void GuardarParametros(
+    ParametrosEvaluacion parametros)
+{
+    using var workbook = new XLWorkbook(rutaExcel);
 
-            break;
-        }
-    }
+    var hoja = workbook.Worksheet("PARAMETROS");
+
+    hoja.Cell("B6").Value = parametros.AsistenciaMaxima;
+    hoja.Cell("C6").Value = parametros.ActividadesMaximas;
+    hoja.Cell("D6").Value = parametros.PracticasMaximas;
+    hoja.Cell("E6").Value = parametros.ExamenMaximo;
+
+    hoja.Cell("B7").Value = parametros.PorcentajeAsistencia;
+    hoja.Cell("C7").Value = parametros.PorcentajeActividades;
+    hoja.Cell("D7").Value = parametros.PorcentajePracticas;
+    hoja.Cell("E7").Value = parametros.PorcentajeExamen;
 
     workbook.Save();
 }

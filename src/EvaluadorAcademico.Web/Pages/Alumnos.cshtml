@@ -3,8 +3,13 @@
 
 <h1>Administración de Alumnos</h1>
 
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-info">
+        @Model.Mensaje
+    </div>
+}
 <form method="post">
-
     <div class="mb-3">
         <label>Matrícula</label>
         <input asp-for="Alumno.Matricula"
@@ -22,6 +27,24 @@
         <input asp-for="Alumno.Grupo"
                class="form-control" />
     </div>
+    <div class="mb-3">
+    <label>Cuatrimestre</label>
+
+    <input asp-for="Alumno.Cuatrimestre"
+           class="form-control" />
+</div>
+
+<div class="mb-3">
+    <label>Estatus</label>
+
+    <select asp-for="Alumno.Estatus"
+            class="form-control">
+
+        <option>Activo</option>
+        <option>Inactivo</option>
+
+    </select>
+</div>
 
     <div class="mb-3">
         <label>Asignatura</label>
@@ -45,6 +68,7 @@
             <th>Matrícula</th>
             <th>Nombre</th>
             <th>Grupo</th>
+            <th>Cuatrimestre</th>
             <th>Asignatura</th>
             <th>Estatus</th>
         </tr>
@@ -57,6 +81,7 @@
                 <td>@alumno.Matricula</td>
                 <td>@alumno.Nombre</td>
                 <td>@alumno.Grupo</td>
+                <td>@alumno.Cuatrimestre</td>
                 <td>@alumno.Asignatura</td>
                 <td>@alumno.Estatus</td>
             </tr>

@@ -16,6 +16,8 @@ public class CapturarModel : PageModel
 
     public decimal Calificacion10 { get; set; }
 
+    public string Mensaje { get; set; } = "";
+
     public void OnGet()
     {
     }
@@ -27,18 +29,8 @@ public class CapturarModel : PageModel
         AlumnoEncontrado =
             excel.BuscarAlumno(Evaluacion.Matricula);
 
-        var parametros = new ParametrosEvaluacion
-        {
-            AsistenciaMaxima = 24,
-            ActividadesMaximas = 1000,
-            PracticasMaximas = 10,
-            ExamenMaximo = 125,
-
-            PorcentajeAsistencia = 10,
-            PorcentajeActividades = 25,
-            PorcentajePracticas = 25,
-            PorcentajeExamen = 40
-        };
+        var parametros =
+            excel.ObtenerParametros();
 
         var calculo = new CalculoService();
 
@@ -56,6 +48,9 @@ public class CapturarModel : PageModel
             excel.GuardarEvaluacion(
                 Evaluacion,
                 AlumnoEncontrado.Nombre);
+
+            Mensaje =
+                "✅ Evaluación guardada correctamente.";
         }
     }
 }

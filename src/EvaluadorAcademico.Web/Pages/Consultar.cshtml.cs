@@ -12,6 +12,8 @@ public class ConsultarModel : PageModel
 
     public Alumno? Alumno { get; set; }
 
+    public Evaluacion? Evaluacion { get; set; }
+
     public void OnGet()
     {
     }
@@ -21,5 +23,7 @@ public class ConsultarModel : PageModel
         var excel = new ExcelService();
 
         Alumno = excel.BuscarAlumno(Matricula);
+
+        Evaluacion = excel.ObtenerEvaluacion(Matricula);
     }
 }

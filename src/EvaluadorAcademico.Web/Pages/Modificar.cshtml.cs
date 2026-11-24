@@ -32,26 +32,22 @@ public class ModificarModel : PageModel
 
     public void OnPostGuardar()
     {
-        var parametros = new ParametrosEvaluacion
-        {
-            AsistenciaMaxima = 24,
-            ActividadesMaximas = 1000,
-            PracticasMaximas = 10,
-            ExamenMaximo = 125,
+        var excel = new ExcelService();
 
-            PorcentajeAsistencia = 10,
-            PorcentajeActividades = 25,
-            PorcentajePracticas = 25,
-            PorcentajeExamen = 40
-        };
+        var parametros =
+            excel.ObtenerParametros();
 
         var calculo = new CalculoService();
 
         Evaluacion =
             calculo.Calcular(Evaluacion, parametros);
 
-        var excel = new ExcelService();
-
         excel.ActualizarEvaluacion(Evaluacion);
+
+        ModelState.Clear();
+
+        Matricula = "";
+
+        Evaluacion = new Evaluacion();
     }
 }

@@ -10,6 +10,11 @@ namespace EvaluadorAcademico.Web.Models
 
         public string Asignatura { get; set; } = string.Empty;
 
+        public string Cuatrimestre { get; set; } = string.Empty;
+
         public string Estatus { get; set; } = "Activo";
+
+        public string Mensaje { get; set; } = "";
+        
     }
 }

@@ -1,0 +1,100 @@
+@page
+@model ReportesModel
+
+<h1>Reportes Académicos</h1>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="alert alert-primary">
+            <strong>Total Alumnos:</strong>
+            @Model.TotalAlumnos
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <strong>Total Evaluaciones:</strong>
+            @Model.TotalEvaluaciones
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="alert alert-warning">
+            <strong>Promedio General:</strong>
+            @Model.PromedioGeneral.ToString("0.00")
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="alert alert-info">
+            <strong>Aprobados:</strong>
+            @Model.Aprobados
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <strong>Reprobados:</strong>
+            @Model.Reprobados
+        </div>
+    </div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <strong>🏆 Mejor Promedio:</strong>
+            @Model.MejorPromedio.ToString("0.00")
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="alert alert-secondary">
+            <strong>📉 Menor Promedio:</strong>
+            @Model.MenorPromedio.ToString("0.00")
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="alert alert-dark">
+            <strong>📊 % Aprobación:</strong>
+            @Model.PorcentajeAprobacion.ToString("0.00") %
+        </div>
+    </div>
+    <hr />
+
+<hr />
+
+<h2>Listado de Alumnos</h2>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Matrícula</th>
+            <th>Nombre</th>
+            <th>Asignatura</th>
+            <th>Cuatrimestre</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var alumno in Model.AlumnosReporte)
+        {
+            <tr>
+                <td>@alumno.Matricula</td>
+                <td>@alumno.Nombre</td>
+                <td>@alumno.Asignatura</td>
+                <td>@alumno.Cuatrimestre</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

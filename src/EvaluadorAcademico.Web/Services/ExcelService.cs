@@ -210,4 +210,30 @@ public void GuardarParametros(
 
     workbook.Save();
 }
+public List<Evaluacion> ObtenerTodasLasEvaluaciones()
+{
+    var evaluaciones = new List<Evaluacion>();
+
+    using var workbook = new XLWorkbook(rutaExcel);
+
+    var hoja = workbook.Worksheet("EVALUACIONES");
+
+    var filas = hoja.RowsUsed().Skip(2);
+
+    foreach (var fila in filas)
+    {
+        evaluaciones.Add(new Evaluacion
+        {
+            Matricula = fila.Cell(1).GetValue<string>().Trim(),
+            Asistencia = fila.Cell(3).GetValue<decimal>(),
+            Actividades = fila.Cell(4).GetValue<decimal>(),
+            Practicas = fila.Cell(5).GetValue<decimal>(),
+            Examen = fila.Cell(6).GetValue<decimal>(),
+            Calificacion10 = fila.Cell(7).GetValue<decimal>()
+        });
+    }
+
+    return evaluaciones;
+}
+
 }

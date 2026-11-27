@@ -1,0 +1,35 @@
+@page
+@model PruebaIAModel
+
+<h1>Prueba Azure AI Foundry</h1>
+
+<form method="post">
+
+    <div class="mb-3">
+
+        <label>Texto</label>
+
+        <textarea asp-for="Texto"
+                  class="form-control"
+                  rows="8">
+        </textarea>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+
+        Interpretar
+
+    </button>
+
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Respuesta))
+{
+    <hr />
+
+    <h3>Respuesta IA</h3>
+
+    <pre>@Model.Respuesta</pre>
+}
